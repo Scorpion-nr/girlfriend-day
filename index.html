@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Girlfriend Day - Pour mon amour ❤️</title>
+
+    <!-- Open Graph pour l'aperçu WhatsApp -->
+    <meta property="og:title" content="Girlfriend Day, pour Mon amour" />
+    <meta property="og:description" content="Une aventure pensée juste pour toi... Cliquez pour commencer !" />
+    <meta property="og:image" content="preview.jpg" />
+
+    <style>
+        :root {
+            --bg-color: #120407;
+            --card-bg: #220a10;
+            --accent: #ff4d6d;
+            --accent-hover: #ff758f;
+            --text-color: #fff0f3;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .step {
+            display: none;
+            background: linear-gradient(145deg, var(--card-bg), #330d16);
+            border: 1px solid rgba(255, 77, 109, 0.3);
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .step.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { color: var(--accent); font-size: 1.8em; margin-bottom: 10px; }
+        h2 { font-size: 1.3em; color: var(--accent-hover); margin-bottom: 15px; }
+        p { font-size: 1em; line-height: 1.5; color: #ffccd5; margin-bottom: 20px; }
+
+        /* Boutons */
+        .btn-action {
+            background: linear-gradient(45deg, #ff4d6d, #ff758f);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 1.05em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+            transition: transform 0.2s;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .btn-action:active { transform: scale(0.96); }
+        .btn-action:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Quiz Options & Input */
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 77, 109, 0.3);
+            color: var(--text-color);
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 12px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95em;
+            text-align: left;
+        }
+
+        .quiz-option:hover { background: var(--accent); color: white; }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 77, 109, 0.4);
+            border-radius: 10px;
+            color: white;
+            padding: 10px;
+            font-family: inherit;
+            resize: none;
+            margin-top: 10px;
+        }
+
+        .feedback-error {
+            color: #ff4d6d;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        /* Galerie Media */
+        .media-box {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 2px solid rgba(255, 77, 109, 0.3);
+            background: #000;
+        }
+
+        .media-box img, .media-box video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .media-caption {
+            font-style: italic;
+            color: #ffccd5;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Puzzle Game */
+        #puzzle-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            width: 270px;
+            height: 270px;
+            margin: 0 auto 20px auto;
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .puzzle-piece {
+            width: 90px;
+            height: 90px;
+            background-size: 270px 270px;
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        /* Canvas Pluie de cœurs avec Photo */
+        #heartCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="/home/scorpion/Musique/Ma nana [TJLbUmVM3fg].mp3" type="audio/mpeg">
+    </audio>
+
+    <canvas id="heartCanvas"></canvas>
+
+    <div class="container">
+
+        <!-- ÉCRAN 1 : ACCUEIL -->
+        <div class="step active" id="step-home">
+            <h1>1er Août 2026</h1>
+            <h2>Girlfriend Day ❤️</h2>
+            <p>J'ai préparé une aventure unique pour toi... Monte le son et laisse-toi porter ! 🎧</p>
+            <button class="btn-action" onclick="startAdventure()">Prête pour l'aventure ? ✨</button>
+        </div>
+
+        <!-- ÉCRAN 2 : QUIZ -->
+        <div class="step" id="step-quiz">
+            <h3 style="color: var(--accent); font-size: 0.9em; margin-bottom: 5px;" id="quiz-progress">Question 1/20</h3>
+            <h2 id="quiz-question">Question ici...</h2>
+            
+            <div id="quiz-options"></div>
+            <div id="quiz-feedback" class="feedback-error"></div>
+
+            <!-- Zone de réaction après réponse (Champ Obligatoire) -->
+            <div id="comment-zone" style="display: none; margin-top: 15px;">
+                <p style="font-size: 0.85em; margin-bottom: 5px; color: #ff758f;">
+                    Qu'est-ce que tu penses de cette question ? (Obligatoire) 😉
+                </p>
+                <textarea id="user-comment" placeholder="Écris ce que tu penses ici pour passer à la suite..." required></textarea>
+                <div id="comment-error" style="color: #ff4d6d; font-size: 0.8em; margin-top: 5px;"></div>
+                
+                <button class="btn-action" id="btn-next-q" onclick="submitAndNext()">Valider et passer à la suite ➔</button>
+            </div>
+        </div>
+
+        <!-- ÉCRAN 3 : RÉSULTAT DU QUIZ -->
+        <div class="step" id="step-quiz-result">
+            <h2>Résultat du Quiz ! 🏆</h2>
+            <p id="score-text" style="font-size: 1.5em; font-weight: bold; color: var(--accent); margin: 15px 0;"></p>
+            <p id="score-message"></p>
+            <button class="btn-action" onclick="nextStep('step-gallery')">Découvrir nos souvenirs 📸</button>
+        </div>
+
+        <!-- ÉCRAN 4 : GALERIE MULTIMÉDIA -->
+        <div class="step" id="step-gallery">
+            <h3 style="color: var(--accent); font-size: 0.9em;" id="gallery-progress">Souvenir 1/10</h3>
+            <h2 id="gallery-title">Titre du souvenir</h2>
+            
+            <div class="media-box" id="media-box"></div>
+            <div class="media-caption" id="gallery-caption">Message associé...</div>
+
+            <button class="btn-action" onclick="nextMedia()">Souvenir suivant ➔</button>
+        </div>
+
+        <!-- ÉCRAN 5 : MINI PUZZLE -->
+        <div class="step" id="step-puzzle">
+            <h2>Un Dernier Petit Jeu... 🧩</h2>
+            <p>Reconstitue notre photo pour débloquer ton message final ! (Clique sur deux pièces pour les échanger)</p>
+            
+            <div id="puzzle-board"></div>
+            
+            <button class="btn-action" id="btn-puzzle-next" style="display: none;" onclick="nextStep('step-message')">Lire mon message ❤️</button>
+        </div>
+
+        <!-- ÉCRAN 6 : MESSAGE FINAL -->
+        <div class="step" id="step-message">
+            <h1>Mon Amour... ❤️</h1>
+            <p style="text-align: justify; font-size: 0.95em; line-height: 1.6;">
+                Joyeuse fête à toi, ma chérie ! <br><br>
+                Merci d'être cette personne exceptionnelle qui illumine ma vie au quotidien. Même si la distance nous sépare, chaque rire, chaque vidéo et chaque souvenir partagé me rappellent à quel point j'ai de la chance de t'avoir. <br><br>
+                Tu es mon trésor, ma meilleure amie et mon amour tout entier.
+            </p>
+            <button class="btn-action" onclick="triggerHearts()">Clique ici mon amour ! 💖</button>
+        </div>
+
+    </div>
+
+    <script>
+        // CONFIGURATION PERSONNELLE
+        const FORMSPREE_URL = "https://formspree.io/f/xwvgzbpn"; // Colle ton lien Formspree ici
+        const HER_PHOTO_URL = 'WhatsApp Image 2026-07-13 at 19.48.24.jpeg'; // Photo pour le puzzle et la pluie de cœurs
+
+        // 1. DATA : 20 QUESTIONS
+        const quizData = [
+            { q: "1. Quel est mon plat préféré quand on est ensemble ?", options: ["Salade 🥗", "Plat gourmand 🍔", "Café ☕"], correct: 1, err: "Faux ! Je suis un vrai gourmand 😜" },
+            { q: "2. Quand je mets du temps à répondre, tu penses :", options: ["Il bosse 👨‍💻", "Il regarde d'autres stories ! 👀", "C'est fini 😂"], correct: 1, err: "Avoue la détective en toi ! 👀" },
+            { q: "3. Quelle est la chose que j'aime le plus chez toi ?", options: ["Ton rire 😊", "Quand tu boudes 😜", "ABSOLUMENT TOUT ❤️"], correct: 2, err: "Rien à jeter, j'aime tout ! ❤️" },
+            { q: "4. Qui a craqué en premier ?", options: ["Toi 😏", "Moi 🙈", "Les deux 🌟"], correct: 0, err: "C'est toi la première ! 😂" },
+            { q: "5. Notre destination de rêve ensemble ?", options: ["Au bout du monde ✈️", "Sous la couette 🛏️", "Les deux ! 🌟"], correct: 2, err: "On prend tout ! 🌟" },
+            { q: "6. Mon plus grand défaut selon toi ?", options: ["Trop gentil 🥺", "Têtu 🙈", "Être trop loin de toi 💔"], correct: 2, err: "Le seul défaut c'est la distance ! ❤️" },
+            { q: "7. Mon moment préféré de la journée ?", options: ["Quand on s'appelle 📞", "Manger 🍕", "Dormir 😴"], correct: 0, err: "Nos appels évidemment ! 📞" },
+            { q: "8. À quel point tu me manques ?", options: ["Un peu", "Beaucoup", "Infiniment ♾️"], correct: 2, err: "C'est INFINIMENT ! ♾️" },
+            { q: "9. Ma réaction à tes photos ?", options: ["Je souris bêtement 😍", "Je dis sympa", "Fond d'écran 🖼️"], correct: 0, err: "Je souris comme un idiot 😍" },
+            { q: "10. Est-ce que tu sais à quel point je t'aime ?", options: ["Un peu", "Je commence à comprendre ❤️", "Pas du tout 😜"], correct: 1, err: "Tu commences à comprendre ! ❤️" },
+            { q: "11. Qui boude le plus souvent ?", options: ["Toi 😜", "Moi 😇", "Égalité 🤝"], correct: 0, err: "C'est toi la championne de la boude ! 😜" },
+            { q: "12. Quelle est notre meilleure habitude ?", options: ["S'endormir en appel 💤", "Se taquiner 🤪", "Les deux ❤️"], correct: 2, err: "Les deux font notre force ! ❤️" },
+            { q: "13. Ma couleur préférée sur toi ?", options: ["Rouge ❤️", "Noir 🖤", "Tout te va bien 👗"], correct: 2, err: "Tout te va à ravir ! ✨" },
+            { q: "14. Quelle chanson me fait penser à toi ?", options: ["Notre chanson 🎵", "Toutes les chansons d'amour 💕", "Aucune 😜"], correct: 1, err: "Toutes les chansons d'amour me parlent de toi ! 💕" },
+            { q: "15. Qu'est-ce qui me fait le plus craquer ?", options: ["Ton regard 👁️", "Ton sourire 😄", "Tes vocal 🎙️"], correct: 1, err: "Ton magnifique sourire ! 😄" },
+            { q: "16. Notre premier souvenir fort ?", options: ["Premier appel 📱", "Premier mot 💬", "Premier regard 👀"], correct: 0, err: "Ce tout premier appel magique ! 📱" },
+            { q: "17. Qui est le plus jaloux ?", options: ["Moi 🤫", "Toi 👀", "Personne 😇"], correct: 1, err: "C'est toi la petite jalouse ! 👀" },
+            { q: "18. Ce qui nous caractérise le plus ?", options: ["La complicité ✨", "L'amour ❤️", "La folie 🤪"], correct: 1, err: "Un amour indestructible ! ❤️" },
+            { q: "19. Si j'avais un pouvoir magique ?", options: ["Téléportation vers toi ✈️", "Invisible 👻", "Lire dans tes pensées 🧠"], correct: 0, err: "Me téléporter direct à tes côtés ! ✈️" },
+            { q: "20. Promets-moi de toujours sourire ?", options: ["Promis ✋❤️", "Peut-être 😜", "Non 🙈"], correct: 0, err: "C'est une obligation ! Promis ! ✋❤️" }
+        ];
+
+        // 2. DATA : 10 SOUVENIRS
+        const galleryData = [
+            { type: 'image', src: 'WhatsApp Image 2026-07-13 at 19.48.24.jpeg', title: 'Le Début 🌟', caption: 'Ce jour-là, j’ai compris que tu n’étais pas une personne comme les autres.' },
+            { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.38.mp4', title: 'Ton Rire 🎥', caption: 'Rien au monde ne vaut la douceur de ton rire.' },
+            { type: 'image', src: 'vqknu_WhatsApp Image 2026-07-29 at 17.24.26.jpeg', title: 'Complicité ✨', caption: 'Regarde-nous... la plus belle des équipes.' },
+            { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.31.mp4', title: 'Un Moment Magique 🎬', caption: 'Une vidéo que je me repasse en boucle quand tu me manques.' },
+            { type: 'image', src: 'WhatsApp Image 2026-07-29 at 17.24.00.jpeg', title: 'La Plus Belle 👑', caption: 'Juste toi, dans toute ta splendeur.' },
+            { type: 'image', src: 'WhatsApp Image 2026-07-29 at 17.24.26.jpeg', title: 'Nos Fous Rires 🤪', caption: 'Impossible de rester sérieux plus de 5 minutes avec toi.' },
+            { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.21.mp4', title: 'Petite Douceur 📹', caption: 'Un petit bout de bonheur capturé.' },
+            { type: 'image', src: 'WhatsApp Image 2026-07-29 at 17.25.24.jpeg', title: 'Pensée Pour Toi 💭', caption: 'Chaque instant du quotidien me fait penser à toi.' },
+            { type: 'image', src: 'yyrkl_WhatsApp Image 2026-07-29 at 17.24.00.jpeg', title: 'Vers l’Avenir 🚀', caption: 'Chaque jour nous rapproche un peu plus.' },
+            { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.42.mp4', title: 'Je t’aime ❤️', caption: 'Le dernier souvenir de cette galerie... mais tellement d’autres à venir !' }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+        let selectedOptionText = "";
+        let currentMediaIdx = 0;
+
+        function startAdventure() {
+            document.getElementById('bgMusic').play().catch(() => {});
+            nextStep('step-quiz');
+            loadQuestion();
+        }
+
+        function nextStep(id) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if(id === 'step-gallery') loadMedia();
+            if(id === 'step-puzzle') initPuzzle();
+        }
+
+        // LOGIQUE QUIZ
+        function loadQuestion() {
+            const q = quizData[currentQ];
+            document.getElementById('quiz-progress').innerText = `Question ${currentQ + 1} / ${quizData.length}`;
+            document.getElementById('quiz-question').innerText = q.q;
+            document.getElementById('quiz-feedback').innerText = "";
+            document.getElementById('comment-error').innerText = "";
+            document.getElementById('comment-zone').style.display = "none";
+
+            const optsDiv = document.getElementById('quiz-options');
+            optsDiv.innerHTML = "";
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "quiz-option";
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(idx, opt);
+                optsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected, optionText) {
+            const q = quizData[currentQ];
+            selectedOptionText = optionText;
+
+            if (selected === q.correct) {
+                score++;
+                document.getElementById('quiz-feedback').style.color = "#4E9F3D";
+                document.getElementById('quiz-feedback').innerText = "Excellente réponse ! ❤️";
+            } else {
+                document.getElementById('quiz-feedback').style.color = "#ff4d6d";
+                document.getElementById('quiz-feedback').innerText = q.err;
+            }
+
+            document.querySelectorAll('.quiz-option').forEach(b => b.disabled = true);
+            document.getElementById('comment-zone').style.display = "block";
+        }
+
+        function submitAndNext() {
+            const commentInput = document.getElementById('user-comment');
+            const commentText = commentInput.value.trim();
+            const errorDiv = document.getElementById('comment-error');
+
+            if (commentText === "") {
+                errorDiv.innerText = "⚠️ Tu dois écrire ce que tu penses avant de continuer !";
+                return;
+            }
+
+            const btn = document.getElementById('btn-next-q');
+            btn.innerText = "Envoi en cours...";
+            btn.disabled = true;
+
+            fetch(FORMSPREE_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    question_numero: currentQ + 1,
+                    question: quizData[currentQ].q,
+                    sa_reponse: selectedOptionText,
+                    son_commentaire: commentText
+                })
+            }).then(() => {
+                btn.innerText = "Valider et passer à la suite ➔";
+                btn.disabled = false;
+                commentInput.value = "";
+                
+                currentQ++;
+                if (currentQ < quizData.length) {
+                    loadQuestion();
+                } else {
+                    showQuizResults();
+                }
+            }).catch(err => {
+                btn.innerText = "Valider et passer à la suite ➔";
+                btn.disabled = false;
+                commentInput.value = "";
+                currentQ++;
+                if (currentQ < quizData.length) loadQuestion(); else showQuizResults();
+            });
+        }
+
+        function showQuizResults() {
+            nextStep('step-quiz-result');
+            document.getElementById('score-text').innerText = `${score} / ${quizData.length}`;
+            if(score === 20) {
+                document.getElementById('score-message').innerText = "Score Parfait ! Tu es officiellement la copine la plus incroyable du monde. ❤️";
+            } else if(score > 12) {
+                document.getElementById('score-message').innerText = "Super score ! Tu me connais vraiment bien... Je suis sous le charme ! 😍";
+            } else {
+                document.getElementById('score-message').innerText = "Oula ! Quelques erreurs... mais je t'aime quand même de tout mon cœur ! 😜";
+            }
+        }
+
+        // LOGIQUE GALERIE
+        function loadMedia() {
+            const m = galleryData[currentMediaIdx];
+            document.getElementById('gallery-progress').innerText = `Souvenir ${currentMediaIdx + 1} / ${galleryData.length}`;
+            document.getElementById('gallery-title').innerText = m.title;
+            document.getElementById('gallery-caption').innerText = m.caption;
+
+            const box = document.getElementById('media-box');
+            if (m.type === 'image') {
+                box.innerHTML = `<img src="${m.src}" alt="Souvenir">`;
+            } else {
+                box.innerHTML = `<video src="${m.src}" controls autoplay loop></video>`;
+            }
+        }
+
+        function nextMedia() {
+            currentMediaIdx++;
+            if (currentMediaIdx < galleryData.length) {
+                loadMedia();
+            } else {
+                nextStep('step-puzzle');
+            }
+        }
+
+        // LOGIQUE PUZZLE (3x3)
+        let pieces = [0,1,2,3,4,5,6,7,8];
+        let selectedPiece = null;
+
+        function initPuzzle() {
+            // S'assurer que le puzzle est mélangé
+            pieces.sort(() => Math.random() - 0.5);
+            renderPuzzle();
+        }
+
+        function renderPuzzle() {
+            const board = document.getElementById('puzzle-board');
+            board.innerHTML = "";
+            pieces.forEach((p, index) => {
+                const div = document.createElement('div');
+                div.className = 'puzzle-piece';
+                div.style.backgroundImage = `url('${HER_PHOTO_URL}')`;
+                
+                const x = (p % 3) * -90;
+                const y = Math.floor(p / 3) * -90;
+                div.style.backgroundPosition = `${x}px ${y}px`;
+                
+                div.onclick = () => swapPiece(index);
+                board.appendChild(div);
+            });
+            checkPuzzleSolved();
+        }
+
+        function swapPiece(index) {
+            if (selectedPiece === null) {
+                selectedPiece = index;
+            } else {
+                let temp = pieces[selectedPiece];
+                pieces[selectedPiece] = pieces[index];
+                pieces[index] = temp;
+                selectedPiece = null;
+                renderPuzzle();
+            }
+        }
+
+        function checkPuzzleSolved() {
+            const isSolved = pieces.every((val, index) => val === index);
+            if (isSolved) {
+                document.getElementById('btn-puzzle-next').style.display = 'block';
+            } else {
+                document.getElementById('btn-puzzle-next').style.display = 'none';
+            }
+        }
+
+        // CANVAS CŒURS AVEC PHOTO
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+        let hearts = [];
+
+        const herImg = new Image();
+        herImg.src = HER_PHOTO_URL;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class HeartPhoto {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = -40;
+                this.size = Math.random() * 30 + 35;
+                this.speedY = Math.random() * 2 + 1.5;
+                this.opacity = 1;
+            }
+
+            update() {
+                this.y += this.speedY;
+                if (this.y > canvas.height) this.opacity -= 0.02;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                
+                ctx.beginPath();
+                let topCurveHeight = this.size * 0.3;
+                ctx.moveTo(this.x, this.y + topCurveHeight);
+                ctx.bezierCurveTo(this.x, this.y, this.x - this.size / 2, this.y, this.x - this.size / 2, this.y + topCurveHeight);
+                ctx.bezierCurveTo(this.x - this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + this.size, this.x, this.y + this.size);
+                ctx.bezierCurveTo(this.x, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + topCurveHeight);
+                ctx.bezierCurveTo(this.x + this.size / 2, this.y, this.x, this.y, this.x, this.y + topCurveHeight);
+                ctx.closePath();
+                
+                ctx.clip();
+                
+                if (herImg.complete && herImg.naturalWidth !== 0) {
+                    ctx.drawImage(herImg, this.x - this.size/2, this.y, this.size, this.size);
+                } else {
+                    ctx.fillStyle = '#ff4d6d';
+                    ctx.fill();
+                }
+                
+                ctx.restore();
+            }
+        }
+
+        function triggerHearts() {
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => { hearts.push(new HeartPhoto()); }, i * 150);
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < hearts.length; i++) {
+                hearts[i].update();
+                hearts[i].draw();
+                if (hearts[i].opacity <= 0) {
+                    hearts.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
