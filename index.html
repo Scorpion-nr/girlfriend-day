@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Girlfriend Day - Pour mon amour ❤️</title>
 
-    <!-- Open Graph pour l'aperçu WhatsApp -->
-   <!-- Open Graph pour l'aperçu WhatsApp -->
-    <meta property="og:title" content="Girlfriend Day, pour Mon amour" />
+    <!-- WhatsApp / Open Graph -->
+    <title>Girlfriend Day - Pour mon amour ❤️</title>
+    <meta property="og:site_name" content="Girlfriend Day" />
+    <meta property="og:title" content="Girlfriend Day, pour Mon amour ❤️" />
     <meta property="og:description" content="Une journée pensée pour toi, du premier souvenir au dernier éclat de rire." />
-    <meta property="og:image" content="https://scorpion-nr.github.io/girlfriend-day/Capture d’écran du 2026-07-29 20-13-51.png" />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image" content="https://scorpion-nr.github.io/girlfriend-day/Msg.jpeg" />
     <meta property="og:url" content="https://scorpion-nr.github.io/girlfriend-day/" />
     <meta property="og:type" content="website" />
+
+    <!-- Google Fonts pour un rendu visuel élégant -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -30,7 +31,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -62,9 +63,27 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1 { color: var(--accent); font-size: 1.8em; margin-bottom: 10px; }
-        h2 { font-size: 1.3em; color: var(--accent-hover); margin-bottom: 15px; }
-        p { font-size: 1em; line-height: 1.5; color: #ffccd5; margin-bottom: 20px; }
+        h1 { 
+            font-family: 'Great Vibes', cursive;
+            color: var(--accent); 
+            font-size: 2.8em; 
+            margin-bottom: 10px; 
+            text-shadow: 0 2px 10px rgba(255, 77, 109, 0.3);
+        }
+        
+        h2 { 
+            font-size: 1.4em; 
+            color: var(--accent-hover); 
+            margin-bottom: 15px; 
+            font-weight: 600;
+        }
+        
+        p { 
+            font-size: 0.98em; 
+            line-height: 1.6; 
+            color: #ffccd5; 
+            margin-bottom: 20px; 
+        }
 
         /* Boutons */
         .btn-action {
@@ -74,12 +93,17 @@
             padding: 14px 28px;
             border-radius: 30px;
             font-size: 1.05em;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
-            transition: transform 0.2s;
+            transition: all 0.2s ease-in-out;
             width: 100%;
             margin-top: 15px;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.6);
         }
 
         .btn-action:active { transform: scale(0.96); }
@@ -90,7 +114,7 @@
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 77, 109, 0.3);
             color: var(--text-color);
-            padding: 12px;
+            padding: 14px;
             margin: 8px 0;
             border-radius: 12px;
             width: 100%;
@@ -98,28 +122,39 @@
             transition: all 0.2s ease;
             font-size: 0.95em;
             text-align: left;
+            font-family: inherit;
         }
 
-        .quiz-option:hover { background: var(--accent); color: white; }
+        .quiz-option:hover { 
+            background: var(--accent); 
+            color: white; 
+            border-color: var(--accent);
+        }
 
         textarea {
             width: 100%;
-            height: 80px;
+            height: 85px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 77, 109, 0.4);
-            border-radius: 10px;
+            border-radius: 12px;
             color: white;
-            padding: 10px;
+            padding: 12px;
             font-family: inherit;
             resize: none;
             margin-top: 10px;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 8px rgba(255, 77, 109, 0.3);
         }
 
         .feedback-error {
-            color: #ff4d6d;
-            font-weight: bold;
+            font-weight: 600;
             margin-top: 10px;
-            font-size: 0.9em;
+            font-size: 0.95em;
+            min-height: 24px;
         }
 
         /* Galerie Media */
@@ -132,6 +167,9 @@
             margin-bottom: 15px;
             border: 2px solid rgba(255, 77, 109, 0.3);
             background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .media-box img, .media-box video {
@@ -144,22 +182,26 @@
             font-style: italic;
             color: #ffccd5;
             background: rgba(0, 0, 0, 0.4);
-            padding: 10px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 12px;
             margin-bottom: 15px;
         }
 
         /* Puzzle Game */
         #puzzle-board {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 5px;
-            width: 270px;
-            height: 270px;
-            margin: 0 auto 20px auto;
+            grid-template-columns: repeat(3, 90px);
+            grid-template-rows: repeat(3, 90px);
+            gap: 3px;
+            width: 276px;
+            height: 276px;
+            margin: 20px auto;
             border: 2px solid var(--accent);
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
+            background: rgba(255, 77, 109, 0.2);
+            padding: 3px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         .puzzle-piece {
@@ -167,8 +209,12 @@
             height: 90px;
             background-size: 270px 270px;
             cursor: pointer;
-            border: 1px solid rgba(0,0,0,0.2);
-            transition: transform 0.2s;
+            border-radius: 4px;
+            transition: transform 0.1s ease;
+        }
+
+        .puzzle-piece:active {
+            transform: scale(0.95);
         }
 
         /* Canvas Pluie de cœurs avec Photo */
@@ -183,9 +229,8 @@
 </head>
 <body>
 
-    <audio id="bgMusic" loop>
-        <source src="Ya Levis - Chocolat (Paroles⧸Lyrics) [Ece5rkOhbS4].mp3" type="audio/mpeg">
-    </audio>
+    <!-- Musique d'ambiance romantique -->
+    <audio id="bgMusic" loop src="Perfect.mp3"></audio>
 
     <canvas id="heartCanvas"></canvas>
 
@@ -241,20 +286,19 @@
         <!-- ÉCRAN 5 : MINI PUZZLE -->
         <div class="step" id="step-puzzle">
             <h2>Un Dernier Petit Jeu... 🧩</h2>
-            <p>Reconstitue notre photo pour débloquer ton message final ! (Clique sur deux pièces pour les échanger)</p>
+            <p>Reconstitue la photo pour débloquer ton message final ! (Clique sur deux pièces pour les échanger)</p>
             
             <div id="puzzle-board"></div>
             
-            <button class="btn-action" id="btn-puzzle-next" style="display: none;" onclick="nextStep('step-message')">Lire mon message ❤️</button>
+            <button class="btn-action" id="btn-puzzle-next" style="display: none;">Lire mon message ❤️</button>
         </div>
 
         <!-- ÉCRAN 6 : MESSAGE FINAL -->
         <div class="step" id="step-message">
-            <h1>Mon Amour... ❤️</h1>
+            <h1>🌹 Bonne fête du 1er août, bby. 🌹</h1>
             <p style="text-align: justify; font-size: 0.95em; line-height: 1.6;">
-                Joyeuse fête à toi, ma chérie ! <br><br>
-                Merci d'être cette personne exceptionnelle qui illumine ma vie au quotidien. Même si la distance nous sépare, chaque rire, chaque vidéo et chaque souvenir partagé me rappellent à quel point j'ai de la chance de t'avoir. <br><br>
-                Tu es mon trésor, ma meilleure amie et mon amour tout entier.
+                Je voulais trouver une manière différente de te dire à quel point tu comptes pour moi. Alors j'ai créé ce petit site juste pour toi. ❤️Merci d'être la personne que tu es : douce, attentionnée et tellement précieuse à mes yeux. Même quand tu es timide, ton sourire parle pour toi et illumine mes journées.J'espère que ce n'est que le début de tous les beaux souvenirs que nous construirons ensemble. Je te promets de toujours faire de mon mieux pour te voir sourire, te respecter et prendre soin de notre histoire. <br><br>
+                Je t'aime plus que les mots ne peuvent l'exprimer. ❤️
             </p>
             <button class="btn-action" onclick="triggerHearts()">Clique ici mon amour ! 💖</button>
         </div>
@@ -263,45 +307,45 @@
 
     <script>
         // CONFIGURATION PERSONNELLE
-        const FORMSPREE_URL = "https://formspree.io/f/xwvgzbpn"; // Colle ton lien Formspree ici
-        const HER_PHOTO_URL = 'WhatsApp Image 2026-07-13 at 19.48.24.jpeg'; // Photo pour le puzzle et la pluie de cœurs
+        const FORMSPREE_URL = "https://formspree.io/f/xwvgzbpn";
+        const HER_PHOTO_URL = 'WhatsApp Image 2026-07-13 at 19.48.24.jpeg';
 
         // 1. DATA : 20 QUESTIONS
         const quizData = [
-            { q: "1. Quel est mon plat préféré quand on est ensemble ?", options: ["Salade 🥗", "Plat gourmand 🍔", "Café ☕"], correct: 1, err: "Faux ! Je suis un vrai gourmand 😜" },
-            { q: "2. Quand je mets du temps à répondre, tu penses :", options: ["Il bosse 👨‍💻", "Il regarde d'autres stories ! 👀", "C'est fini 😂"], correct: 1, err: "Avoue la détective en toi ! 👀" },
+            { q: "1. Quand on a commencé à se parler, qu'est-ce que tu pensais de moi ? ?", options: ["Il a l'air gentil 😊", "Je ne savais pas encore quoi penser 🤔", "Je me suis dit qu'il était différent ❤️"], correct: 1, err: "Moi je me suis dit que tu étais spécial ! ❤️" },
+            { q: "2. Quel mot décrit le mieux notre relation ?:", options: ["Complicité 🤝", "Confiance ❤️", "Bonheur ✨"], correct: 1, err: "Avoue moi" },
             { q: "3. Quelle est la chose que j'aime le plus chez toi ?", options: ["Ton rire 😊", "Quand tu boudes 😜", "ABSOLUMENT TOUT ❤️"], correct: 2, err: "Rien à jeter, j'aime tout ! ❤️" },
             { q: "4. Qui a craqué en premier ?", options: ["Toi 😏", "Moi 🙈", "Les deux 🌟"], correct: 0, err: "C'est toi la première ! 😂" },
-            { q: "5. Notre destination de rêve ensemble ?", options: ["Au bout du monde ✈️", "Sous la couette 🛏️", "Les deux ! 🌟"], correct: 2, err: "On prend tout ! 🌟" },
+            { q: "5. Si notre histoire était une chanson, elle serait...", options: ["Douce 🎶", "Romantique 🎵", "Inoubliable 🌹"], correct: 2, err: "On prend tout ! 🌟" },
             { q: "6. Mon plus grand défaut selon toi ?", options: ["Trop gentil 🥺", "Têtu 🙈", "Être trop loin de toi 💔"], correct: 2, err: "Le seul défaut c'est la distance ! ❤️" },
             { q: "7. Mon moment préféré de la journée ?", options: ["Quand on s'appelle 📞", "Manger 🍕", "Dormir 😴"], correct: 0, err: "Nos appels évidemment ! 📞" },
             { q: "8. À quel point tu me manques ?", options: ["Un peu", "Beaucoup", "Infiniment ♾️"], correct: 2, err: "C'est INFINIMENT ! ♾️" },
             { q: "9. Ma réaction à tes photos ?", options: ["Je souris bêtement 😍", "Je dis sympa", "Fond d'écran 🖼️"], correct: 0, err: "Je souris comme un idiot 😍" },
             { q: "10. Est-ce que tu sais à quel point je t'aime ?", options: ["Un peu", "Je commence à comprendre ❤️", "Pas du tout 😜"], correct: 1, err: "Tu commences à comprendre ! ❤️" },
             { q: "11. Qui boude le plus souvent ?", options: ["Toi 😜", "Moi 😇", "Égalité 🤝"], correct: 0, err: "C'est toi la championne de la boude ! 😜" },
-            { q: "12. Quelle est notre meilleure habitude ?", options: ["S'endormir en appel 💤", "Se taquiner 🤪", "Les deux ❤️"], correct: 2, err: "Les deux font notre force ! ❤️" },
+            { q: "12. Promets-moi de toujours sourire ?", options: ["Promis ✋❤️", "Non 🙈", "Les deux ❤️"], correct: 2, err: "je compte sur toi bae ❤️" },
             { q: "13. Ma couleur préférée sur toi ?", options: ["Rouge ❤️", "Noir 🖤", "Tout te va bien 👗"], correct: 2, err: "Tout te va à ravir ! ✨" },
-            { q: "14. Quelle chanson me fait penser à toi ?", options: ["Notre chanson 🎵", "Toutes les chansons d'amour 💕", "Aucune 😜"], correct: 1, err: "Toutes les chansons d'amour me parlent de toi ! 💕" },
-            { q: "15. Qu'est-ce qui me fait le plus craquer ?", options: ["Ton regard 👁️", "Ton sourire 😄", "Tes vocal 🎙️"], correct: 1, err: "Ton magnifique sourire ! 😄" },
+            { q: "14. Quelle chanson me fait penser à toi ?", options: ["Notre chanson 🎵", "Toutes les chansons d'amour 💕", "Aucune 😜"], correct: 1, err: "Toutes les chansons d'amour me parlent de toi bae ! 💕" },
+            { q: "15. Qu'est-ce qui me fait le plus craquer ?", options: ["Ton regard 👁️", "Ton sourire 😄", "Tes vocal 🎙️"], correct: 1, err: "Ton magnifique sourire bae ! 😄" },
             { q: "16. Notre premier souvenir fort ?", options: ["Premier appel 📱", "Premier mot 💬", "Premier regard 👀"], correct: 0, err: "Ce tout premier appel magique ! 📱" },
             { q: "17. Qui est le plus jaloux ?", options: ["Moi 🤫", "Toi 👀", "Personne 😇"], correct: 1, err: "C'est toi la petite jalouse ! 👀" },
             { q: "18. Ce qui nous caractérise le plus ?", options: ["La complicité ✨", "L'amour ❤️", "La folie 🤪"], correct: 1, err: "Un amour indestructible ! ❤️" },
             { q: "19. Si j'avais un pouvoir magique ?", options: ["Téléportation vers toi ✈️", "Invisible 👻", "Lire dans tes pensées 🧠"], correct: 0, err: "Me téléporter direct à tes côtés ! ✈️" },
-            { q: "20. Promets-moi de toujours sourire ?", options: ["Promis ✋❤️", "Peut-être 😜", "Non 🙈"], correct: 0, err: "C'est une obligation ! Promis ! ✋❤️" }
+            { q: "20. Une dernière question... Que représente Emmanuel pour toi ?", options: ["Une personne spéciale ❤️", "Mon bonheur 🥰", "Mon avenir 💍"], correct: 0, err: "Pour moi tu es mon tout bae" }
         ];
 
         // 2. DATA : 10 SOUVENIRS
         const galleryData = [
-            { type: 'image', src: 'WhatsApp Image 2026-07-13 at 19.48.24.jpeg', title: 'Le Début 🌟', caption: 'Ce jour-là, j’ai compris que tu n’étais pas une personne comme les autres.' },
-            { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.38.mp4', title: 'Ton Rire 🎥', caption: 'Rien au monde ne vaut la douceur de ton rire.' },
-            { type: 'image', src: 'vqknu_WhatsApp Image 2026-07-29 at 17.24.26.jpeg', title: 'Complicité ✨', caption: 'Regarde-nous... la plus belle des équipes.' },
-            { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.31.mp4', title: 'Un Moment Magique 🎬', caption: 'Une vidéo que je me repasse en boucle quand tu me manques.' },
+            { type: 'image', src: 'WhatsApp Image 2026-07-13 at 19.48.24.jpeg', title: 'Le Début 🌟', caption: 'Tout a commencé par un simple instant.Sans le savoir, ce moment allait devenir le début de notre histoire.' },
+            { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.38.mp4', title: 'un Moment Magique 🎬', caption: 'À chaque fois que je la regarde, je souris sans me lasser.' },
+            { type: 'image', src: 'vqknu_WhatsApp Image 2026-07-29 at 17.24.26.jpeg', title: 'Complicité ✨', caption: 'Ton sourire est l une des choses que je préfère au monde. Il a le pouvoir d illuminer mes journées, même les plus difficiles. 😊❤️' },
+            { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.31.mp4', title: 'Ton Rire 🎥', caption: 'Les photos figent les instants, mais cette vidéo me rappelle les rires, les regards et toutes les émotions  🎥❤️.' },
             { type: 'image', src: 'WhatsApp Image 2026-07-29 at 17.24.00.jpeg', title: 'La Plus Belle 👑', caption: 'Juste toi, dans toute ta splendeur.' },
-            { type: 'image', src: 'WhatsApp Image 2026-07-29 at 17.24.26.jpeg', title: 'Nos Fous Rires 🤪', caption: 'Impossible de rester sérieux plus de 5 minutes avec toi.' },
+            { type: 'image', src: 'WhatsApp Image 2026-07-29 at 17.24.26.jpeg', title: 'My bby', caption: 'Impossible de rester sérieux plus de 5 minutes avec toi.' },
             { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.21.mp4', title: 'Petite Douceur 📹', caption: 'Un petit bout de bonheur capturé.' },
-            { type: 'image', src: 'WhatsApp Image 2026-07-29 at 17.25.24.jpeg', title: 'Pensée Pour Toi 💭', caption: 'Chaque instant du quotidien me fait penser à toi.' },
+            { type: 'image', src: 'WhatsApp Image 2026-07-29 at 17.25.24.jpeg', title: 'Pensée Pour Toi 💭', caption: 'Cette photo me rappelle qu il n est pas nécessaire de faire des choses extraordinaires pour être heureux. Être avec toi suffit. 💖' },
             { type: 'image', src: 'yyrkl_WhatsApp Image 2026-07-29 at 17.24.00.jpeg', title: 'Vers l’Avenir 🚀', caption: 'Chaque jour nous rapproche un peu plus.' },
-            { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.42.mp4', title: 'Je t’aime ❤️', caption: 'Le dernier souvenir de cette galerie... mais tellement d’autres à venir !' }
+            { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.42.mp4', title: 'Message Final ❤️', caption: 'J espère que dans quelques années, nous regarderons cette vidéo ensemble en nous disant Ce n était que le début de notre belle histoire. ❤️✨' }
         ];
 
         let currentQ = 0;
@@ -317,7 +361,10 @@
 
         function nextStep(id) {
             document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            const target = document.getElementById(id);
+            if (target) {
+                target.classList.add('active');
+            }
             if(id === 'step-gallery') loadMedia();
             if(id === 'step-puzzle') initPuzzle();
         }
@@ -407,13 +454,13 @@
             nextStep('step-quiz-result');
             document.getElementById('score-text').innerText = `${score} / ${quizData.length}`;
             if(score === 20) {
-                document.getElementById('score-message').innerText = "Score Parfait ! Tu es officiellement la copine la plus incroyable du monde. ❤️";
+                document.getElementById('score-message').innerText = "Score Parfait ! Tu es officiellement la copine la plus incroyable du monde. ❤️ Merci d'avoir répondu à toutes ces questions. ❤️Peu importe les réponses que tu as choisies, il n'y a pas de bonne ou mauvaise réponse, car je t'aime telle que tu es ! 😘";
             } else if(score > 12) {
-                document.getElementById('score-message').innerText = "Super score ! Tu me connais vraiment bien... Je suis sous le charme ! 😍";
+                document.getElementById('score-message').innerText = "Super score ! Tu me connais vraiment bien... Je suis sous le charme ! 😍 Merci d'avoir répondu à toutes ces questions. ❤️Peu importe les réponses que tu as choisies, il n'y a pas de bonne ou mauvaise réponse, car je t'aime telle que tu es ! 😘";
             } else {
-                document.getElementById('score-message').innerText = "Oula ! Quelques erreurs... mais je t'aime quand même de tout mon cœur ! 😜";
+                    document.getElementById('score-message').innerText = "Merci d'avoir répondu à toutes ces questions. ❤️Peu importe les réponses que tu as choisies, il n'y a pas de bonne ou mauvaise réponse, car je t'aime telle que tu es ! 😘";
+                }
             }
-        }
 
         // LOGIQUE GALERIE
         function loadMedia() {
@@ -442,9 +489,11 @@
         // LOGIQUE PUZZLE (3x3)
         let pieces = [0,1,2,3,4,5,6,7,8];
         let selectedPiece = null;
+        let puzzleSolved = false;
 
         function initPuzzle() {
-            // S'assurer que le puzzle est mélangé
+            puzzleSolved = false;
+            document.getElementById('btn-puzzle-next').style.display = 'none';
             pieces.sort(() => Math.random() - 0.5);
             renderPuzzle();
         }
@@ -468,6 +517,8 @@
         }
 
         function swapPiece(index) {
+            if (puzzleSolved) return;
+
             if (selectedPiece === null) {
                 selectedPiece = index;
             } else {
@@ -482,9 +533,12 @@
         function checkPuzzleSolved() {
             const isSolved = pieces.every((val, index) => val === index);
             if (isSolved) {
-                document.getElementById('btn-puzzle-next').style.display = 'block';
-            } else {
-                document.getElementById('btn-puzzle-next').style.display = 'none';
+                puzzleSolved = true;
+                const nextBtn = document.getElementById('btn-puzzle-next');
+                nextBtn.style.display = 'block';
+                nextBtn.onclick = function() {
+                    nextStep('step-message');
+                };
             }
         }
 
