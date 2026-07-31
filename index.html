@@ -6,7 +6,6 @@
     <title>Girlfriend Day - Pour mon amour ❤️</title>
 
     <!-- WhatsApp / Open Graph -->
-    <title>Girlfriend Day - Pour mon amour ❤️</title>
     <meta property="og:site_name" content="Girlfriend Day" />
     <meta property="og:title" content="Girlfriend Day, pour Mon amour ❤️" />
     <meta property="og:description" content="Une journée pensée pour toi, du premier souvenir au dernier éclat de rire." />
@@ -14,7 +13,7 @@
     <meta property="og:url" content="https://scorpion-nr.github.io/girlfriend-day/" />
     <meta property="og:type" content="website" />
 
-    <!-- Google Fonts pour un rendu visuel élégant -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
@@ -252,7 +251,7 @@
             <div id="quiz-options"></div>
             <div id="quiz-feedback" class="feedback-error"></div>
 
-            <!-- Zone de réaction après réponse (Champ Obligatoire) -->
+            <!-- Zone de réaction après réponse -->
             <div id="comment-zone" style="display: none; margin-top: 15px;">
                 <p style="font-size: 0.85em; margin-bottom: 5px; color: #ff758f;">
                     Qu'est-ce que tu penses de cette question ? (Obligatoire) 😉
@@ -306,14 +305,12 @@
     </div>
 
     <script>
-        // CONFIGURATION PERSONNELLE
         const FORMSPREE_URL = "https://formspree.io/f/xwvgzbpn";
         const HER_PHOTO_URL = 'WhatsApp Image 2026-07-13 at 19.48.24.jpeg';
 
-        // 1. DATA : 20 QUESTIONS
         const quizData = [
-            { q: "1. Quand on a commencé à se parler, qu'est-ce que tu pensais de moi ? ?", options: ["Il a l'air gentil 😊", "Je ne savais pas encore quoi penser 🤔", "Je me suis dit qu'il était différent ❤️"], correct: 1, err: "Moi je me suis dit que tu étais spécial ! ❤️" },
-            { q: "2. Quel mot décrit le mieux notre relation ?:", options: ["Complicité 🤝", "Confiance ❤️", "Bonheur ✨"], correct: 1, err: "Avoue moi" },
+            { q: "1. Quand on a commencé à se parler, qu'est-ce que tu pensais de moi ?", options: ["Il a l'air gentil 😊", "Je ne savais pas encore quoi penser 🤔", "Je me suis dit qu'il était différent ❤️"], correct: 1, err: "Moi je me suis dit que tu étais spécial ! ❤️" },
+            { q: "2. Quel mot décrit le mieux notre relation ?", options: ["Complicité 🤝", "Confiance ❤️", "Bonheur ✨"], correct: 1, err: "Avoue moi" },
             { q: "3. Quelle est la chose que j'aime le plus chez toi ?", options: ["Ton rire 😊", "Quand tu boudes 😜", "ABSOLUMENT TOUT ❤️"], correct: 2, err: "Rien à jeter, j'aime tout ! ❤️" },
             { q: "4. Qui a craqué en premier ?", options: ["Toi 😏", "Moi 🙈", "Les deux 🌟"], correct: 0, err: "C'est toi la première ! 😂" },
             { q: "5. Si notre histoire était une chanson, elle serait...", options: ["Douce 🎶", "Romantique 🎵", "Inoubliable 🌹"], correct: 2, err: "On prend tout ! 🌟" },
@@ -334,12 +331,11 @@
             { q: "20. Une dernière question... Que représente Emmanuel pour toi ?", options: ["Une personne spéciale ❤️", "Mon bonheur 🥰", "Mon avenir 💍"], correct: 0, err: "Pour moi tu es mon tout bae" }
         ];
 
-        // 2. DATA : 10 SOUVENIRS
         const galleryData = [
             { type: 'image', src: 'WhatsApp Image 2026-07-13 at 19.48.24.jpeg', title: 'Le Début 🌟', caption: 'Tout a commencé par un simple instant.Sans le savoir, ce moment allait devenir le début de notre histoire.' },
             { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.38.mp4', title: 'un Moment Magique 🎬', caption: 'À chaque fois que je la regarde, je souris sans me lasser.' },
             { type: 'image', src: 'vqknu_WhatsApp Image 2026-07-29 at 17.24.26.jpeg', title: 'Complicité ✨', caption: 'Ton sourire est l une des choses que je préfère au monde. Il a le pouvoir d illuminer mes journées, même les plus difficiles. 😊❤️' },
-            { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.31.mp4', title: 'Ton Rire 🎥', caption: 'Les photos figent les instants, mais cette vidéo me rappelle les rires, les regards et toutes les émotions  🎥❤️.' },
+            { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.31.mp4', title: 'Ton Rire 🎥', caption: 'Les photos figent les instants, mais cette vidéo me rappelle les rires, les regards et toutes les émotions 🎥❤️.' },
             { type: 'image', src: 'WhatsApp Image 2026-07-29 at 17.24.00.jpeg', title: 'La Plus Belle 👑', caption: 'Juste toi, dans toute ta splendeur.' },
             { type: 'image', src: 'WhatsApp Image 2026-07-29 at 17.24.26.jpeg', title: 'My bby', caption: 'Impossible de rester sérieux plus de 5 minutes avec toi.' },
             { type: 'video', src: 'WhatsApp Video 2026-07-13 at 19.48.21.mp4', title: 'Petite Douceur 📹', caption: 'Un petit bout de bonheur capturé.' },
@@ -369,7 +365,6 @@
             if(id === 'step-puzzle') initPuzzle();
         }
 
-        // LOGIQUE QUIZ
         function loadQuestion() {
             const q = quizData[currentQ];
             document.getElementById('quiz-progress').innerText = `Question ${currentQ + 1} / ${quizData.length}`;
@@ -377,6 +372,7 @@
             document.getElementById('quiz-feedback').innerText = "";
             document.getElementById('comment-error').innerText = "";
             document.getElementById('comment-zone').style.display = "none";
+            document.getElementById('user-comment').value = ""; // Vider la zone de texte pour la question suivante
 
             const optsDiv = document.getElementById('quiz-options');
             optsDiv.innerHTML = "";
@@ -421,9 +417,24 @@
             btn.innerText = "Envoi en cours...";
             btn.disabled = true;
 
+            const nextStepOrFinish = () => {
+                btn.innerText = "Valider et passer à la suite ➔";
+                btn.disabled = false;
+                currentQ++;
+                if (currentQ < quizData.length) {
+                    loadQuestion();
+                } else {
+                    showQuizResults();
+                }
+            };
+
+            // Envoi des données vers Formspree
             fetch(FORMSPREE_URL, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
                 body: JSON.stringify({
                     question_numero: currentQ + 1,
                     question: quizData[currentQ].q,
@@ -431,22 +442,9 @@
                     son_commentaire: commentText
                 })
             }).then(() => {
-                btn.innerText = "Valider et passer à la suite ➔";
-                btn.disabled = false;
-                commentInput.value = "";
-                
-                currentQ++;
-                if (currentQ < quizData.length) {
-                    loadQuestion();
-                } else {
-                    showQuizResults();
-                }
-            }).catch(err => {
-                btn.innerText = "Valider et passer à la suite ➔";
-                btn.disabled = false;
-                commentInput.value = "";
-                currentQ++;
-                if (currentQ < quizData.length) loadQuestion(); else showQuizResults();
+                nextStepOrFinish();
+            }).catch(() => {
+                nextStepOrFinish();
             });
         }
 
@@ -458,11 +456,10 @@
             } else if(score > 12) {
                 document.getElementById('score-message').innerText = "Super score ! Tu me connais vraiment bien... Je suis sous le charme ! 😍 Merci d'avoir répondu à toutes ces questions. ❤️Peu importe les réponses que tu as choisies, il n'y a pas de bonne ou mauvaise réponse, car je t'aime telle que tu es ! 😘";
             } else {
-                    document.getElementById('score-message').innerText = "Merci d'avoir répondu à toutes ces questions. ❤️Peu importe les réponses que tu as choisies, il n'y a pas de bonne ou mauvaise réponse, car je t'aime telle que tu es ! 😘";
-                }
+                document.getElementById('score-message').innerText = "Merci d'avoir répondu à toutes ces questions. ❤️Peu importe les réponses que tu as choisies, il n'y a pas de bonne ou mauvaise réponse, car je t'aime telle que tu es ! 😘";
             }
+        }
 
-        // LOGIQUE GALERIE
         function loadMedia() {
             const m = galleryData[currentMediaIdx];
             document.getElementById('gallery-progress').innerText = `Souvenir ${currentMediaIdx + 1} / ${galleryData.length}`;
@@ -486,7 +483,6 @@
             }
         }
 
-        // LOGIQUE PUZZLE (3x3)
         let pieces = [0,1,2,3,4,5,6,7,8];
         let selectedPiece = null;
         let puzzleSolved = false;
@@ -542,7 +538,6 @@
             }
         }
 
-        // CANVAS CŒURS AVEC PHOTO
         const canvas = document.getElementById('heartCanvas');
         const ctx = canvas.getContext('2d');
         let hearts = [];
